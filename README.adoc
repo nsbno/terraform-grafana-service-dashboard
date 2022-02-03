@@ -10,3 +10,21 @@ toc::[]
 == About
 Get dashboards for your resources inside grafana!
 This includes overviews of RDS, ECS, SNS and more!
+
+== Usage
+
+Place this directly in your microservice's infrastructure repo!
+
+[source, hcl]
+----
+module "grafana_dashboards" {
+  source = "github.com/nsbno/terraform-aws-grafana-dashboard"
+
+  name_prefix      = "infrademo"
+  application_name = "trains-go-fast"
+  environment      = "prod"
+
+  ecs_cluster = data.ecs_cluster.this.name
+  s3_buckets  = [aws_s3_bucket.train_data.arn]
+}
+----
