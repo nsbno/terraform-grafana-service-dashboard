@@ -53,7 +53,7 @@ variable "s3_buckets" {
 
 variable "elasticache_group" {
   description = "Elasticache Groups to create dashboards from"
-  type = list(string)
+  type = string
 
   default = null
 }
