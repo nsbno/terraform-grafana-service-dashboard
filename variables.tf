@@ -25,9 +25,9 @@ variable "ecs_cluster" {
 
 variable "rds_instance" {
   description = "RDS Instances to create dashboards from"
-  type = list(string)
+  type = string
 
-  default = []
+  default = null
 }
 
 variable "sns_topics" {

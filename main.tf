@@ -39,7 +39,7 @@ resource "grafana_dashboard" "ecs_cluster" {
 }
 
 resource "grafana_dashboard" "rds_instances" {
-  count  = length(var.rds_instance) > 0 ? 1 : 0
+  count  = var.rds_instance == null ? 0 : 1
 
   folder = grafana_folder.collection.id
 
