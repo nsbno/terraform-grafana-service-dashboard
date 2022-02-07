@@ -1,4 +1,4 @@
-= Grafana Dashboard
+= Grafana Service Dashboard
 :!toc-title:
 :!toc-placement:
 :toc:
@@ -18,7 +18,7 @@ Place this directly in your microservice's infrastructure repo!
 [source, hcl]
 ----
 module "grafana_dashboards" {
-  source = "github.com/nsbno/terraform-aws-grafana-dashboard"
+  source = "github.com/nsbno/terraform-grafana-service-dashboard?ref=x.y.z"
 
   name_prefix      = "infrademo"
   application_name = "trains-go-fast"
