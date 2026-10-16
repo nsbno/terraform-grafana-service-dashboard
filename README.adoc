@@ -28,3 +28,44 @@ module "grafana_dashboards" {
   s3_buckets  = [aws_s3_bucket.train_data.arn]
 }
 ----
+
+== Upgrading to Grafana provider v4
+
+This module requires version `~> 4.0` of the `grafana/grafana` provider.
+Earlier versions of this module allowed provider `>= 1.12.0`.
+
+If you have existing state created with provider v1, you cannot jump straight to v4.
+Grafana's https://github.com/grafana/terraform-provider-grafana/releases/tag/v3.0.0[v3.0.0 release notes] require the state to be migrated by the latest v2 release first.
+Do this while you are still on your *current* version of this module:
+
+. Pin the provider to the latest v2 in your root module and apply:
++
+[source, hcl]
+----
+terraform {
+  required_providers {
+    grafana = {
+      source  = "grafana/grafana"
+      version = "~> 2.19"
+    }
+  }
+}
+----
++
+[source, shell]
+----
+terraform init -upgrade
+terraform apply
+----
++
+Expect the folder ID to change from a number to `<org_id>:<folder_uid>`, and the dashboards to be updated in place with the new folder reference.
+. If your `provider "grafana"` block sets `org_id`, remove it. Provider v3 removed this attribute, and v4 fails if it is set.
+The provider will then use the organization of the credentials it authenticates with.
+. Change the provider constraint to `~> 4.0`, bump this module to the new version, and run `terraform init -upgrade` and `terraform apply` again.
+
+[NOTE]
+====
+The `folder_id` output is no longer a numeric ID.
+It is now the Terraform resource ID, in the format `<org_id>:<folder_uid>`.
+Use the new `folder_uid` output when you need to reference the folder, for example as the `folder` of a `grafana_dashboard`.
+====

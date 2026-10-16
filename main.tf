@@ -4,7 +4,7 @@ terraform {
   required_providers {
     grafana = {
       source  = "grafana/grafana"
-      version = ">= 1.12.0"
+      version = ">= 4.0.0"
     }
   }
 }
@@ -24,7 +24,7 @@ resource "grafana_folder" "collection" {
 resource "grafana_dashboard" "ecs_cluster" {
   count = var.ecs_cluster == null ? 0 : 1
 
-  folder = grafana_folder.collection.id
+  folder = grafana_folder.collection.uid
 
   config_json = templatefile("${path.module}/grafana-templates/ecs-dashboard.tpl", {
     "name" : title("ECS ${var.name_prefix} ${var.application_name} ${var.environment}")
@@ -41,7 +41,7 @@ resource "grafana_dashboard" "ecs_cluster" {
 resource "grafana_dashboard" "rds_instances" {
   count  = var.rds_instance == null ? 0 : 1
 
-  folder = grafana_folder.collection.id
+  folder = grafana_folder.collection.uid
 
   config_json = templatefile("${path.module}/grafana-templates/rds-dashboard.tpl", {
     "name" : title("RDS ${var.name_prefix} ${var.application_name} ${var.environment}")
@@ -65,7 +65,7 @@ locals {
 resource "grafana_dashboard" "sns_topics" {
   count  = length(local.sns_topics) > 0 ? 1 : 0
 
-  folder = grafana_folder.collection.id
+  folder = grafana_folder.collection.uid
 
   config_json = templatefile("${path.module}/grafana-templates/sns-dashboard.tpl", {
     "name" : title("SNS ${var.name_prefix} ${var.application_name} ${var.environment}")
@@ -89,7 +89,7 @@ locals {
 resource "grafana_dashboard" "sqs_queues" {
   count  = length(local.sqs_queues) > 0 ? 1 : 0
 
-  folder = grafana_folder.collection.id
+  folder = grafana_folder.collection.uid
 
   config_json = templatefile("${path.module}/grafana-templates/sqs-dashboard.tpl", {
     "name" : title("SQS ${var.name_prefix} ${var.application_name} ${var.environment}")
@@ -112,7 +112,7 @@ locals {
 resource "grafana_dashboard" "s3_buckets" {
   count  = length(local.s3_buckets) > 0 ? 1 : 0
 
-  folder = grafana_folder.collection.id
+  folder = grafana_folder.collection.uid
 
   config_json = templatefile("${path.module}/grafana-templates/s3-dashboard.tpl", {
     "name" : title("S3 ${var.name_prefix} ${var.application_name} ${var.environment}")
@@ -129,7 +129,7 @@ resource "grafana_dashboard" "s3_buckets" {
 resource "grafana_dashboard" "elasticache_group" {
   count  = var.elasticache_group == null ? 0 : 1
 
-  folder = grafana_folder.collection.id
+  folder = grafana_folder.collection.uid
 
   config_json = templatefile("${path.module}/grafana-templates/elasticache-dashboard.tpl", {
     "name" : title("Elasticache ${var.name_prefix} ${var.application_name} ${var.environment}")
