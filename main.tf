@@ -43,7 +43,7 @@ resource "grafana_dashboard" "ecs_cluster" {
 }
 
 resource "grafana_dashboard" "rds_instances" {
-  count  = var.rds_instance == null ? 0 : 1
+  count = var.rds_instance == null ? 0 : 1
 
   folder = grafana_folder.collection.uid
 
@@ -67,7 +67,7 @@ locals {
 }
 
 resource "grafana_dashboard" "sns_topics" {
-  count  = length(local.sns_topics) > 0 ? 1 : 0
+  count = length(local.sns_topics) > 0 ? 1 : 0
 
   folder = grafana_folder.collection.uid
 
@@ -91,7 +91,7 @@ locals {
 }
 
 resource "grafana_dashboard" "sqs_queues" {
-  count  = length(local.sqs_queues) > 0 ? 1 : 0
+  count = length(local.sqs_queues) > 0 ? 1 : 0
 
   folder = grafana_folder.collection.uid
 
@@ -114,7 +114,7 @@ locals {
   ]
 }
 resource "grafana_dashboard" "s3_buckets" {
-  count  = length(local.s3_buckets) > 0 ? 1 : 0
+  count = length(local.s3_buckets) > 0 ? 1 : 0
 
   folder = grafana_folder.collection.uid
 
@@ -131,7 +131,7 @@ resource "grafana_dashboard" "s3_buckets" {
 }
 
 resource "grafana_dashboard" "elasticache_group" {
-  count  = var.elasticache_group == null ? 0 : 1
+  count = var.elasticache_group == null ? 0 : 1
 
   folder = grafana_folder.collection.uid
 
