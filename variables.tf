@@ -8,6 +8,12 @@ variable "application_name" {
   type = string
 }
 
+variable "display_name_override" {
+  description = "Optional display name for the dashboard, overrides the default name (variable application_name) if set"
+  type = string
+  default = null
+}
+
 variable "environment" {
   description = "The environment that the application is launched in"
   type = string
